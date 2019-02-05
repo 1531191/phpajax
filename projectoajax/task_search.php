@@ -19,13 +19,13 @@ if (!empty($search)) {
     while ($row = mysqli_fetch_array($result)) {
 
         $json[] = array('name' => $row['name'],
-                        'decription' => $row['decription'],
+                        'description' => $row['description'],
                         'id' => $row['id']);
     }
     
     $jsonstring = json_encode($json);
     echo $jsonstring;
     
-    // HOLA TUTORIALsad
+    
 }
 ?>
