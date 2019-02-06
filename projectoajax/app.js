@@ -5,6 +5,7 @@ $(function(){
     console.log('Jquery Start');
     
     $('#task-result').hide();
+    fetchTasks();
     
     // cada que presiona una tecla keyup
     $('#search').keyup(function (){
@@ -50,11 +51,43 @@ $(function(){
         
         // escucha la respuesta del servidor y muestra por consola
         $.post('task-add.php',postData , function (response) {
-            console.log(response);
+            fetchTasks();
+            
+            $('#task-form').trigger('reset');
         });
         
         e.preventDefault();
     });
+    
+    
+    function fetchTasks(){
+        
+        $.ajax({
+        
+        url: 'task-list.php',
+        type: 'GET',
+        success: function (response){
+            
+            let tasks = JSON.parse(response);
+            let template = '';
+            tasks.forEach(task=> {
+                
+                template += `<tr>
+                
+                    <td>${task.id}</td>
+                <td>${task.name}</td>
+                <td>${task.description}</td>
+                
+                </tr>
+`
+            });
+            $('#tasks').html(template);
+            
+        } 
+        
+    });
+    }
+    
     
     
 });
